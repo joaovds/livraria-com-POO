@@ -9,7 +9,7 @@ abstract class Crud extends Connection
   protected $connection;
 
   abstract public function insert();
-  abstract public function update();
+  abstract public function update($id);
 
   public function __construct()
   {
