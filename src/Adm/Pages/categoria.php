@@ -30,7 +30,7 @@ include_once '../../Models/Categoria.php';
         <?php
         $categoria = new Categoria();
 
-        if ($_POST) {
+        if (isset($_POST['cadastrar'])) {
           $nome = $_POST['nome'];
           $descricao = $_POST['descricao'];
 
@@ -44,27 +44,72 @@ include_once '../../Models/Categoria.php';
           }
         }
 
+        if (isset($_POST['update'])) {
+          $id = $_POST['id'];
+          $nome = $_POST['nome'];
+          $descricao = $_POST['descricao'];
+
+          $categoria->setNome($nome);
+          $categoria->setDescricao($descricao);
+
+          if ($categoria->update($id)) {
+            echo "Editado com sucesso";
+          } else {
+            echo "Algum erro aconteceu";
+          }
+        }
+
         if (isset($_GET['delete'])) {
           $categoria->delete($_GET['delete']);
         }
+
+        if (isset($_GET['edit'])) : $value = $categoria->find($_GET['edit']);
         ?>
 
-        <form action="categoria.php" method="post">
+          <form action="categoria.php" method="post">
 
-          <div class="form-row">
-            <div class="form-group col-lg-6">
-              <label for="nome">Nome:</label>
-              <input type="text" class="form-control" name="nome" />
+            <div class="form-row">
+              <div class="form-group col-lg-6">
+                <label for="nome">Nome:</label>
+                <input type="hidden" name="id" value="<?php echo $value['cd_categoria'] ?>">
+                <input type="text" class="form-control" name="nome" value="<?php echo $value['nm_categoria']; ?>" />
+              </div>
+              <div class="form-group col-lg-12">
+                <label for="descricao">Descrição da categoria:</label>
+                <textarea class="form-control" name="descricao" rows="3"><?php echo $value['ds_categoria']; ?></textarea>
+              </div>
+              <div class="form-group col-md-4 offset-md-4 col-sm-4 offset-sm-0 mt-4">
+                <input type="submit" name="update" value="Salvar alterações" class="btn btn-primary btn-block">
+              </div>
             </div>
-            <div class="form-group col-lg-12">
-              <label for="descricao">Descrição da categoria:</label>
-              <textarea class="form-control" name="descricao" rows="3"></textarea>
+            <div class="form-row">
+              <div class="form-group col-md-4 offset-md-4 col-sm-4 offset-sm-0">
+                <a href="categoria.php" class="btn btn-outline-primary btn-block">Voltar</a>
+              </div>
             </div>
-            <div class="form-group col-md-4 offset-md-4 col-sm-4 offset-sm-0 mt-4">
-              <input type="submit" value="Cadastrar" class="btn btn-primary btn-block">
+          </form>
+
+        <?php else : ?>
+
+          <form action="categoria.php" method="post">
+
+            <div class="form-row">
+              <div class="form-group col-lg-6">
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" name="nome" />
+              </div>
+              <div class="form-group col-lg-12">
+                <label for="descricao">Descrição da categoria:</label>
+                <textarea class="form-control" name="descricao" rows="3"></textarea>
+              </div>
+              <div class="form-group col-md-4 offset-md-4 col-sm-4 offset-sm-0 mt-4">
+                <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary btn-block">
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+
+        <?php endif ?>
+
       </div>
     </div>
 
@@ -94,7 +139,7 @@ include_once '../../Models/Categoria.php';
                   <?php echo $value['ds_categoria'] ?>
                 </td>
                 <td class="d-flex justify-content-center align-items-baseline border-0">
-                  <a href="#">
+                  <a href="?edit=<?php echo $value['cd_categoria'] ?>">
                     <i class="fa fa-edit fa-2x text-info" aria-hidden="true"></i>
                   </a>
                   <a href="?delete=<?php echo $value['cd_categoria'] ?>">
