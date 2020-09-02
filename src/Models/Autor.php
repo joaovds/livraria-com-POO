@@ -47,4 +47,9 @@ class Autor extends Crud
 
     return $stmt->execute();
   }
+
+  public function deleteFotoAutor($name)
+  {
+    unlink('../../../assets/imgs/autor/' . $name);
+  }
 }

@@ -46,6 +46,11 @@ include_once '../../Models/Autor.php';
             }
           }
         }
+
+        if (isset($_GET['delete']) && isset($_GET['nomeFoto'])) {
+          $autor->delete($_GET['delete']);
+          $autor->deleteFotoAutor($_GET['nomeFoto']);
+        }
         ?>
 
         <form action="autor.php" method="post" enctype="multipart/form-data">
@@ -96,7 +101,7 @@ include_once '../../Models/Autor.php';
                   <a href="#">
                     <i class="fa fa-edit fa-2x text-info" aria-hidden="true"></i>
                   </a>
-                  <a href="#">
+                  <a href="?delete=<?php echo $value['cd_autor'] ?>&nomeFoto=<?php echo $value['nm_foto_autor'] ?>">
                     <i class="fa fa-trash fa-2x text-danger ml-5" aria-hidden="true"></i>
                   </a>
                 </td>
