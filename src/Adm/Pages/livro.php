@@ -1,3 +1,7 @@
+<?php
+require_once '../../Models/Livro.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -22,6 +26,49 @@
 
     <div class="row mt-4">
       <div class="col-md-8 offset-md-2 border rounded shadow-sm p-3 mx-md-5 mx-md-auto">
+
+        <?php
+        $livro = new Livro();
+
+        if ($_POST) {
+          $nome = $_POST['nome'];
+          $idioma = $_POST['idioma'];
+          $isbn = $_POST['isbn'];
+          $ano = $_POST['ano'];
+          $altura = $_POST['altura'];
+          $largura = $_POST['largura'];
+          $profundidade = $_POST['profundidade'];
+          $peso = $_POST['peso'];
+          $paginas = $_POST['paginas'];
+          $exemplares = $_POST['exemplares'];
+          $valor = $_POST['valor'];
+          $editora = $_POST['editora'];
+          $autor = $_POST['autor'];
+          $categorias = $_POST['categorias'];
+
+          $livro->setNome($nome);
+          $livro->setIdioma($idioma);
+          $livro->setIsbn($isbn);
+          $livro->setAnoLancamento($ano);
+          $livro->setAltura($altura);
+          $livro->setLargura($largura);
+          $livro->setProfundidade($profundidade);
+          $livro->setPeso($peso);
+          $livro->setNumeroPaginas($paginas);
+          $livro->setNumeroExemplares($exemplares);
+          $livro->setValor($valor);
+          $livro->setIdEditora($editora);
+          $livro->setIdAutor($autor);
+
+          if ($livro->insert()) {
+            $livro->insertLivroCategoria($categorias);
+            echo "Cadastro feito com sucesso";
+          } else {
+            echo "Algum erro aconteceu";
+          }
+        }
+        ?>
+
         <form action="livro.php" method="post">
 
           <div class="form-row">
@@ -93,7 +140,7 @@
             <div class="form-group col-lg-4 col-sm-6">
               <label for="editora">Editora:</label>
               <select class="custom-select" name="editora">
-                <option value="harper collins" selected>harper collins</option>
+                <option value="1" selected>harper collins</option>
                 <option value="martins fontes">martins fontes</option>
                 <option value="nova vida">nova vida</option>
               </select>
@@ -102,7 +149,7 @@
             <div class="form-group col-lg-4 col-sm-6">
               <label for="autor">Autor:</label>
               <select class="custom-select" name="autor">
-                <option value="J.R.R. Tolkien" selected>J.R.R. Tolkien</option>
+                <option value="1" selected>J.R.R. Tolkien</option>
                 <option value="algum autor">algum autor</option>
                 <option value="outro autor">outro autor</option>
               </select>
@@ -111,11 +158,11 @@
             <div class="form-group col-12">
               <label class="col-12">Categorias:</label>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="categoria" value="fantasia">
+                <input class="form-check-input" type="checkbox" name="categorias[]" value="1">
                 <label class="form-check-label" for="categoria">Fantasia</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="categoria" value="aventura">
+                <input class="form-check-input" type="checkbox" name="categorias[]" value="2">
                 <label class="form-check-label" for="categoria">Aventura</label>
               </div>
             </div>
