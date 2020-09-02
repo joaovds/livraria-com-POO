@@ -43,6 +43,10 @@ include_once '../../Models/Categoria.php';
             echo "Algum erro aconteceu";
           }
         }
+
+        if (isset($_GET['delete'])) {
+          $categoria->delete($_GET['delete']);
+        }
         ?>
 
         <form action="categoria.php" method="post">
@@ -93,7 +97,7 @@ include_once '../../Models/Categoria.php';
                   <a href="#">
                     <i class="fa fa-edit fa-2x text-info" aria-hidden="true"></i>
                   </a>
-                  <a href="#">
+                  <a href="?delete=<?php echo $value['cd_categoria'] ?>">
                     <i class="fa fa-trash fa-2x text-danger ml-5" aria-hidden="true"></i>
                   </a>
                 </td>
