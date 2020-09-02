@@ -1,3 +1,7 @@
+<?php
+include_once '../../Models/Autor.php';
+?>
+
 <!doctype html>
 <html lang="pt-br">
 
@@ -23,6 +27,27 @@
 
     <div class="row mt-4">
       <div class="col-md-8 offset-md-2 border rounded shadow-sm p-3 mx-md-5 mx-md-auto">
+
+        <?php
+        $autor = new Autor();
+
+        if ($_POST) {
+          $nome = $_POST['nome'];
+          $route = '../../../assets/imgs/autor/' . $_FILES['foto']['name'];
+
+          if (move_uploaded_file($_FILES['foto']['tmp_name'], $route)) {
+            $autor->setNome($nome);
+            $autor->setNomeFoto($_FILES['foto']['name']);
+
+            if ($autor->insert()) {
+              echo "Cadastro feito com sucesso";
+            } else {
+              echo "Algum erro aconteceu";
+            }
+          }
+        }
+        ?>
+
         <form action="autor.php" method="post" enctype="multipart/form-data">
 
           <div class="form-row">
