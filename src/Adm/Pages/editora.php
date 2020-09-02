@@ -77,23 +77,32 @@ require_once '../../Models/Editora.php';
               <td scope="col-3">#</td>
             </tr>
           </thead>
-          <tbody>
-            <tr scope="row">
-              <th>1</th>
-              <td>Nome da Editora</td>
-              <td class="text-center">
-                <img src="https://images.pexels.com/photos/3251706/pexels-photo-3251706.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" width="150px" class="rounded img-thumbnail">
-              </td>
-              <td class="d-flex justify-content-center align-items-baseline border-0">
-                <a href="#">
-                  <i class="fa fa-edit fa-2x text-info" aria-hidden="true"></i>
-                </a>
-                <a href="#">
-                  <i class="fa fa-trash fa-2x text-danger ml-5" aria-hidden="true"></i>
-                </a>
-              </td>
-            </tr>
-          </tbody>
+
+          <?php foreach ($editora->findAll() as $key => $value) : ?>
+
+            <tbody>
+              <tr scope="row">
+                <th>
+                  <?php echo $value['cd_editora'] ?>
+                </th>
+                <td>
+                  <?php echo $value['nm_editora'] ?>
+                </td>
+                <td class="text-center">
+                  <img src="../../../assets/imgs/editora/<?php echo $value['nm_logo_editora']; ?>" width="150px" class="rounded img-thumbnail">
+                </td>
+                <td class="d-flex justify-content-center align-items-baseline border-0">
+                  <a href="#">
+                    <i class="fa fa-edit fa-2x text-info" aria-hidden="true"></i>
+                  </a>
+                  <a href="#">
+                    <i class="fa fa-trash fa-2x text-danger ml-5" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+
+          <?php endforeach ?>
         </table>
       </div>
     </div>
