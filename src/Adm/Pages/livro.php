@@ -189,29 +189,38 @@ require_once '../../Models/Livro.php';
               <td scope="col">#</td>
             </tr>
           </thead>
-          <tbody>
-            <tr scope="row">
-              <th>1</th>
-              <td>Nome do livro</td>
-              <td>
-                quantidade exemplares
-              </td>
-              <td>
-                10.00
-              </td>
-              <td class="border-0 d-md-flex justify-content-around">
-                <a href="#" class="text-info">
-                  Editar
-                </a>
-                <a href="#" class="text-info">
-                  Galeria
-                </a>
-                <a href="#" class="text-danger">
-                  Excluir
-                </a>
-              </td>
-            </tr>
-          </tbody>
+
+          <?php foreach ($livro->findAll() as $key => $value) : ?>
+
+            <tbody>
+              <tr scope="row">
+                <th>
+                  <?php echo $value['cd_livro'] ?>
+                </th>
+                <td>
+                  <?php echo $value['nm_livro'] ?>
+                </td>
+                <td>
+                  <?php echo $value['n_exemplares'] ?>
+                </td>
+                <td>
+                  <strong>R$ <?php echo $value['vl_livro'] ?></strong>
+                </td>
+                <td class="border-0 d-md-flex justify-content-around">
+                  <a href="#" class="text-info">
+                    Editar
+                  </a>
+                  <a href="#" class="text-info">
+                    Galeria
+                  </a>
+                  <a href="#" class="text-danger">
+                    Excluir
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+
+          <?php endforeach ?>
         </table>
       </div>
     </div>
