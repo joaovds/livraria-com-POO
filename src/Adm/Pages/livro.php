@@ -1,5 +1,12 @@
 <?php
 require_once '../../Models/Livro.php';
+require_once '../../Models/Categoria.php';
+require_once '../../Models/Autor.php';
+require_once '../../Models/Editora.php';
+
+$categoriaC = new Categoria();
+$autorC = new Autor();
+$editoraC = new Editora();
 ?>
 
 <!DOCTYPE html>
@@ -140,31 +147,44 @@ require_once '../../Models/Livro.php';
             <div class="form-group col-lg-4 col-sm-6">
               <label for="editora">Editora:</label>
               <select class="custom-select" name="editora">
-                <option value="1" selected>harper collins</option>
-                <option value="martins fontes">martins fontes</option>
-                <option value="nova vida">nova vida</option>
+
+                <?php foreach ($editoraC->findAll() as $key => $value) : ?>
+
+                  <option value="<?php echo $value['cd_editora'] ?>">
+                    <?php echo $value['nm_editora'] ?>
+                  </option>
+
+                <?php endforeach ?>
               </select>
             </div>
 
             <div class="form-group col-lg-4 col-sm-6">
               <label for="autor">Autor:</label>
               <select class="custom-select" name="autor">
-                <option value="1" selected>J.R.R. Tolkien</option>
-                <option value="algum autor">algum autor</option>
-                <option value="outro autor">outro autor</option>
+
+                <?php foreach ($autorC->findAll() as $key => $value) : ?>
+
+                  <option value="<?php echo $value['cd_autor'] ?>">
+                    <?php echo $value['nm_autor'] ?>
+                  </option>
+
+                <?php endforeach ?>
               </select>
             </div>
 
             <div class="form-group col-12">
               <label class="col-12">Categorias:</label>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="categorias[]" value="1">
-                <label class="form-check-label" for="categoria">Fantasia</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="categorias[]" value="2">
-                <label class="form-check-label" for="categoria">Aventura</label>
-              </div>
+
+              <?php foreach ($categoriaC->findAll() as $key => $value) : ?>
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" name="categorias[]" value="<?php echo $value['cd_categoria'] ?>">
+                  <label class="form-check-label" for="categoria">
+                    <?php echo $value['nm_categoria'] ?>
+                  </label>
+                </div>
+
+              <?php endforeach ?>
             </div>
           </div>
 
