@@ -228,4 +228,13 @@ class Livro extends Crud
 
     return $stmt->execute();
   }
+
+  public function deleteLivroCategoria($id)
+  {
+    $sql = "DELETE FROM tb_livro_categoria WHERE id_livro = :id";
+    $stmt = Connection::getInstance()->prepare($sql);
+    $stmt->bindParam(':id', $id);
+
+    return $stmt->execute();
+  }
 }

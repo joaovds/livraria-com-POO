@@ -74,6 +74,13 @@ $editoraC = new Editora();
             echo "Algum erro aconteceu";
           }
         }
+
+        if (isset($_GET['delete'])) {
+          if ($livro->deleteLivroCategoria($_GET['delete'])) {
+            $livro->delete($_GET['delete']);
+            header('Location: livro.php');
+          }
+        }
         ?>
 
         <form action="livro.php" method="post">
@@ -233,7 +240,7 @@ $editoraC = new Editora();
                   <a href="#" class="text-info">
                     Galeria
                   </a>
-                  <a href="#" class="text-danger">
+                  <a href="?delete=<?php echo $value['cd_livro'] ?>" class="text-danger">
                     Excluir
                   </a>
                 </td>
