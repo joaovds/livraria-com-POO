@@ -75,23 +75,32 @@ include_once '../../Models/Categoria.php';
               <td scope="col-3">#</td>
             </tr>
           </thead>
-          <tbody>
-            <tr scope="row">
-              <th>1</th>
-              <td>Nome da categoria</td>
-              <td>
-                Uma descrição da categoria vem aqui!
-              </td>
-              <td class="d-flex justify-content-center align-items-baseline border-0">
-                <a href="#">
-                  <i class="fa fa-edit fa-2x text-info" aria-hidden="true"></i>
-                </a>
-                <a href="#">
-                  <i class="fa fa-trash fa-2x text-danger ml-5" aria-hidden="true"></i>
-                </a>
-              </td>
-            </tr>
-          </tbody>
+
+          <?php foreach ($categoria->findAll() as $key => $value) : ?>
+
+            <tbody>
+              <tr scope="row">
+                <th>
+                  <?php echo $value['cd_categoria'] ?>
+                </th>
+                <td>
+                  <?php echo $value['nm_categoria'] ?>
+                </td>
+                <td>
+                  <?php echo $value['ds_categoria'] ?>
+                </td>
+                <td class="d-flex justify-content-center align-items-baseline border-0">
+                  <a href="#">
+                    <i class="fa fa-edit fa-2x text-info" aria-hidden="true"></i>
+                  </a>
+                  <a href="#">
+                    <i class="fa fa-trash fa-2x text-danger ml-5" aria-hidden="true"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+
+          <?php endforeach ?>
         </table>
       </div>
     </div>
