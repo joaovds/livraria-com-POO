@@ -40,6 +40,8 @@ abstract class Crud extends Connection
     $sql = "DELETE FROM $this->table WHERE $this->cdName = :id";
     $stmt = $this->connection->getInstance()->prepare($sql);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-    $stmt->execute();
+    if ($stmt->execute()) : return true;
+    else : echo "Este dado não pode ser deletado...ele pode estar vinculado a outra consulta!";
+    endif;
   }
 }
