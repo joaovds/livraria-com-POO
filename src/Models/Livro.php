@@ -139,37 +139,56 @@ class Livro extends Crud
 
   public function insert()
   {
-    $sql = "INSERT INTO $this->table VALUES (
-      null,
-      :nome,
-      :idioma,
-      :isbn,
-      :anoLancamento,
-      :altura,
-      :largura,
-      :profundidade,
-      :peso,
-      :numeroPaginas,
-      :numeroExemplares,
-      :valorLivro,
-      :idEditora,
-      :idAutor
-    )";
-    $stmt = Connection::getInstance()->prepare($sql);
-    $stmt->bindParam(':nome', $this->nome);
-    $stmt->bindParam(':idioma', $this->idioma);
-    $stmt->bindParam(':isbn', $this->isbn);
-    $stmt->bindParam(':anoLancamento', $this->anoLancamento);
-    $stmt->bindParam(':altura', $this->altura);
-    $stmt->bindParam(':largura', $this->largura);
-    $stmt->bindParam(':profundidade', $this->profundidade);
-    $stmt->bindParam(':peso', $this->peso);
-    $stmt->bindParam(':numeroPaginas', $this->numeroPaginas);
-    $stmt->bindParam(':numeroExemplares', $this->numeroExemplares);
-    $stmt->bindParam(':valorLivro', $this->valor);
-    $stmt->bindParam(':idEditora', $this->idEditora, PDO::PARAM_INT);
-    $stmt->bindParam(':idAutor', $this->idAutor, PDO::PARAM_INT);
+    try {
+      $sql = "INSERT INTO $this->table VALUES (
+        null,
+        :nome,
+        :idioma,
+        :isbn,
+        :anoLancamento,
+        :altura,
+        :largura,
+        :profundidade,
+        :peso,
+        :numeroPaginas,
+        :numeroExemplares,
+        :valorLivro,
+        :idEditora,
+        :idAutor
+      )";
+      $stmt = Connection::getInstance()->prepare($sql);
+      $stmt->bindParam(':nome', $this->nome);
+      $stmt->bindParam(':idioma', $this->idioma);
+      $stmt->bindParam(':isbn', $this->isbn);
+      $stmt->bindParam(':anoLancamento', $this->anoLancamento);
+      $stmt->bindParam(':altura', $this->altura);
+      $stmt->bindParam(':largura', $this->largura);
+      $stmt->bindParam(':profundidade', $this->profundidade);
+      $stmt->bindParam(':peso', $this->peso);
+      $stmt->bindParam(':numeroPaginas', $this->numeroPaginas);
+      $stmt->bindParam(':numeroExemplares', $this->numeroExemplares);
+      $stmt->bindParam(':valorLivro', $this->valor);
+      $stmt->bindParam(':idEditora', $this->idEditora, PDO::PARAM_INT);
+      $stmt->bindParam(':idAutor', $this->idAutor, PDO::PARAM_INT);
 
+      return $stmt->execute();
+    } catch (PDOException $e) {
+      echo $e;
+    }
+  }
+
+  public function insertLivroCategoria($categorias)
+  {
+    $total = sizeof($categorias);
+    $id = Connection::getInstance()->lastInsertId();
+
+    $sql = "INSERT INTO tb_livro_categoria VALUES ";
+    for ($i = 0; $i < $total; $i++) {
+      $sql .= "($categorias[$i], $id),";
+    }
+    $sql = substr($sql, 0, -1);
+
+    $stmt = Connection::getInstance()->prepare($sql);
     return $stmt->execute();
   }
 
