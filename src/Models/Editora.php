@@ -15,7 +15,7 @@ class Editora extends Crud
   }
   public function setNome($nome)
   {
-    $this->nome - $nome;
+    $this->nome = $nome;
   }
 
   public function getNomeLogo()

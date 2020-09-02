@@ -1,3 +1,7 @@
+<?php
+require_once '../../Models/Editora.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -22,6 +26,27 @@
 
     <div class="row mt-4">
       <div class="col-md-8 offset-md-2 border rounded shadow-sm p-3 mx-md-5 mx-md-auto">
+
+        <?php
+        $editora = new Editora();
+
+        if ($_POST) {
+          $nome = $_POST['nome'];
+          $route = '../../../assets/imgs/editora/' . $_FILES['logo']['name'];
+
+          if (move_uploaded_file($_FILES['logo']['tmp_name'], $route)) {
+            $editora->setNome($nome);
+            $editora->setNomeLogo($_FILES['logo']['name']);
+
+            if ($editora->insert()) {
+              echo "Cadastro feito com sucesso";
+            } else {
+              echo "Algum erro aconteceu";
+            }
+          }
+        }
+        ?>
+
         <form action="editora.php" method="post" enctype="multipart/form-data">
 
           <div class="form-row">
