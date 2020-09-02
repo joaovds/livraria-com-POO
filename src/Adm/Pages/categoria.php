@@ -56,7 +56,7 @@
             <tr scope="row">
               <th>1</th>
               <td>Nome da categoria</td>
-              <td class="text-center">
+              <td>
                 Uma descrição da categoria vem aqui!
               </td>
               <td class="d-flex justify-content-center align-items-baseline border-0">
