@@ -45,6 +45,16 @@ require_once '../../Models/Editora.php';
             }
           }
         }
+
+        if (isset($_GET['delete']) && isset($_GET['nomeLogo'])) {
+          try {
+            $editora->delete($_GET['delete']);
+            $editora->deleteLogoEditora($_GET['nomeLogo']);
+            header('Location: editora.php');
+          } catch (\Throwable $th) {
+            throw $th;
+          }
+        }
         ?>
 
         <form action="editora.php" method="post" enctype="multipart/form-data">
@@ -95,7 +105,7 @@ require_once '../../Models/Editora.php';
                   <a href="#">
                     <i class="fa fa-edit fa-2x text-info" aria-hidden="true"></i>
                   </a>
-                  <a href="#">
+                  <a href="?delete=<?php echo $value['cd_editora'] ?>&nomeLogo=<?php echo $value['nm_logo_editora'] ?>">
                     <i class="fa fa-trash fa-2x text-danger ml-5" aria-hidden="true"></i>
                   </a>
                 </td>

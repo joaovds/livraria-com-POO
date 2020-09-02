@@ -77,8 +77,12 @@ $editoraC = new Editora();
 
         if (isset($_GET['delete'])) {
           if ($livro->deleteLivroCategoria($_GET['delete'])) {
-            $livro->delete($_GET['delete']);
-            header('Location: livro.php');
+            try {
+              $livro->delete($_GET['delete']);
+              header('Location: livro.php');
+            } catch (\Throwable $th) {
+              throw $th;
+            }
           }
         }
         ?>

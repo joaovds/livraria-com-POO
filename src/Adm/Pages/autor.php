@@ -48,8 +48,13 @@ include_once '../../Models/Autor.php';
         }
 
         if (isset($_GET['delete']) && isset($_GET['nomeFoto'])) {
-          $autor->delete($_GET['delete']);
-          $autor->deleteFotoAutor($_GET['nomeFoto']);
+          try {
+            $autor->delete($_GET['delete']);
+            $autor->deleteFotoAutor($_GET['nomeFoto']);
+            header('Location: autor.php');
+          } catch (\Throwable $th) {
+            throw $th;
+          }
         }
         ?>
 

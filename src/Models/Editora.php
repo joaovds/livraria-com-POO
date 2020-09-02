@@ -47,4 +47,9 @@ class Editora extends Crud
 
     return $stmt->execute();
   }
+
+  public function deleteLogoEditora($nome)
+  {
+    unlink('../../../assets/imgs/editora/' . $nome);
+  }
 }
