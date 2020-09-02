@@ -1,3 +1,7 @@
+<?php
+include_once '../../Models/Categoria.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -22,6 +26,25 @@
 
     <div class="row mt-4">
       <div class="col-md-8 offset-md-2 border rounded shadow-sm p-3 mx-md-5 mx-md-auto">
+
+        <?php
+        $categoria = new Categoria();
+
+        if ($_POST) {
+          $nome = $_POST['nome'];
+          $descricao = $_POST['descricao'];
+
+          $categoria->setNome($nome);
+          $categoria->setDescricao($descricao);
+
+          if ($categoria->insert()) {
+            echo "Cadastro feito com sucesso";
+          } else {
+            echo "Algum erro aconteceu";
+          }
+        }
+        ?>
+
         <form action="categoria.php" method="post">
 
           <div class="form-row">
