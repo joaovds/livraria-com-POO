@@ -34,7 +34,7 @@ $categorias = $categoria->findAll();
       <div class="collapse navbar-collapse ml-5" id="navbarContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="./index.html">
+            <a class="nav-link" href="index.php">
               <i class="fa fa-home"></i>
               Home
             </a>
