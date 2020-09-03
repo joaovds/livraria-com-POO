@@ -1,8 +1,12 @@
 <?php
 include_once './src/Models/Categoria.php';
+include_once './src/Models/Autor.php';
 
 $categoria = new Categoria();
 $categorias = $categoria->findAll();
+
+$autor = new Autor();
+$autores = $autor->findAll();
 ?>
 
 <!DOCTYPE html>
@@ -207,46 +211,18 @@ $categorias = $categoria->findAll();
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>JRR. Tolkien</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>JRR. Tolkien</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>JRR. Tolkien</td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>JRR. Tolkien</td>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>JRR. Tolkien</td>
-            </tr>
-            <tr>
-              <th scope="row">6</th>
-              <td>JRR. Tolkien</td>
-            </tr>
-            <tr>
-              <th scope="row">7</th>
-              <td>JRR. Tolkien</td>
-            </tr>
-            <tr>
-              <th scope="row">8</th>
-              <td>JRR. Tolkien</td>
-            </tr>
-            <tr>
-              <th scope="row">9</th>
-              <td>JRR. Tolkien</td>
-            </tr>
-            <tr>
-              <th scope="row">10</th>
-              <td>JRR. Tolkien</td>
-            </tr>
+
+            <?php for ($i = 0; $i < 10; $i++) : ?>
+              <tr>
+                <th scope="row">
+                  <?php echo $i + 1 ?>
+                </th>
+                <td>
+                  <?php echo $autores[$i]['nm_autor'] ?>
+                </td>
+              </tr>
+            <?php endfor ?>
+
           </tbody>
         </table>
       </div>
