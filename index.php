@@ -1,3 +1,10 @@
+<?php
+include_once './src/Models/Categoria.php';
+
+$categoria = new Categoria();
+$categorias = $categoria->findAll();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -38,12 +45,14 @@
               Categorias
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Categoria A</a>
-              <a class="dropdown-item" href="#">Categoria B</a>
-              <a class="dropdown-item" href="#">Categoria C</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Categoria D</a>
-              <a class="dropdown-item" href="#">Categoria E</a>
+
+              <?php
+              for ($i = 0; $i < 10; $i++) :
+              ?>
+                <a class="dropdown-item" href="#">
+                  <?php echo $categorias[$i]['nm_categoria']; ?>
+                </a>
+              <?php endfor ?>
             </div>
           </li>
           <li class="nav-item active">
@@ -96,11 +105,13 @@
         <h4 class="ml-3"><b>Categorias</b></h4>
 
         <ul class="list-group shadow-sm">
-          <li class="list-group-item">Categoria A</li>
-          <li class="list-group-item">Categoria B</li>
-          <li class="list-group-item">Categoria C</li>
-          <li class="list-group-item">Categoria D</li>
-          <li class="list-group-item">Categoria E</li>
+
+          <?php for ($i = 0; $i < 5; $i++) : ?>
+            <li class="list-group-item">
+              <?php echo $categorias[$i]['nm_categoria']; ?>
+            </li>
+          <?php endfor ?>
+
         </ul>
 
         <h4 class="ml-3 mt-5 mb-3 border-bottom"><b>Preço</b></h4>
