@@ -237,4 +237,13 @@ class Livro extends Crud
 
     return $stmt->execute();
   }
+
+  public function paginacao($inicio, $qtRegistros)
+  {
+    $sql = "SELECT * FROM $this->table LIMIT " . $inicio . ", " . $qtRegistros;
+    $stmt = Connection::getInstance()->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
 }
