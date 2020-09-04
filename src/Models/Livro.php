@@ -202,6 +202,16 @@ class Livro extends Crud
     return $stmt->execute();
   }
 
+  public function listarFotosLivro($idLivro)
+  {
+    $sql = "SELECT * FROM tb_foto WHERE id_livro = :idLivro";
+    $stmt = Connection::getInstance()->prepare($sql);
+    $stmt->bindParam(':idLivro', $idLivro);
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+  }
+
   public function update($id)
   {
     $sql = "UPDATE $this->table SET

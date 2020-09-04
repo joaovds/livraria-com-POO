@@ -57,7 +57,20 @@ if (isset($_GET['livro'])) :
           </form>
         </div>
       </div>
-    </div>
+
+      <div class="row mt-5">
+        <div class="col-lg-10 offset-lg-1 border rounded shadow-sm p-4 mx-md-5 mx-lg-auto">
+          <div class="row justify-content-around align-items-start">
+
+            <?php foreach ($livro->listarFotosLivro($_GET['livro']) as $key => $value) : ?>
+              <div class="card mt-2" style="width: 18rem;">
+                <img src="../../../assets/imgs/livro/<?php echo $value['nm_foto'] ?>" class="card-img-top" alt="imagem livro">
+              </div>
+            <?php endforeach ?>
+
+          </div>
+        </div>
+      </div>
   </body>
 
   </html>
