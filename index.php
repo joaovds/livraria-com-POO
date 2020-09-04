@@ -137,6 +137,7 @@ $livros = $livro->findAll();
 
           <?php
           $qtRegistros = "3";
+          $todosLivros = $livro->findAll();
 
           $pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : "1";
 
@@ -166,21 +167,16 @@ $livros = $livro->findAll();
 
         <nav aria-label="offers navigation">
           <ul class="pagination justify-content-center mt-2">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item active">
-              <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
+            <?php
+            $numeroDePaginas = sizeof($todosLivros) / 3;
+
+            for ($i = 1; $i <= ceil($numeroDePaginas); $i++) :
+            ?>
+              <li class="page-item <?php if ($_GET['pagina'] == $i) : echo  "active";
+                                    endif ?>">
+                <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+              </li>
+            <?php endfor; ?>
           </ul>
         </nav>
       </div>
