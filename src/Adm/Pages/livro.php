@@ -241,7 +241,7 @@ $editoraC = new Editora();
                   <a href="#" class="text-info">
                     Editar
                   </a>
-                  <a href="#" class="text-info">
+                  <a href="galeria.php?livro=<?php echo $value['cd_livro'] ?>" class="text-info">
                     Galeria
                   </a>
                   <a href="?delete=<?php echo $value['cd_livro'] ?>" class="text-danger">

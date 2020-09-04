@@ -192,6 +192,16 @@ class Livro extends Crud
     return $stmt->execute();
   }
 
+  public function insertFotoLivro($nomeFotoLivro, $idLivro)
+  {
+    $sql = "INSERT INTO tb_foto VALUES (null, :nmFoto, :idLivro)";
+    $stmt = Connection::getInstance()->prepare($sql);
+    $stmt->bindParam(':nmFoto', $nomeFotoLivro);
+    $stmt->bindParam(':idLivro', $idLivro);
+
+    return $stmt->execute();
+  }
+
   public function update($id)
   {
     $sql = "UPDATE $this->table SET
