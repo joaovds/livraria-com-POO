@@ -1,12 +1,16 @@
 <?php
 include_once './src/Models/Categoria.php';
 include_once './src/Models/Autor.php';
+include_once './src/Models/Livro.php';
 
 $categoria = new Categoria();
 $categorias = $categoria->findAll();
 
 $autor = new Autor();
 $autores = $autor->findAll();
+
+$livro = new Livro();
+$livros = $livro->findAll();
 ?>
 
 <!DOCTYPE html>
@@ -130,47 +134,33 @@ $autores = $autor->findAll();
         </h2>
 
         <div class="ofertas d-sm-block d-md-flex ml-0">
-          <div class="card bg-white shadow ml-md-1 mt-2 mx-auto" style="width: 18rem;">
-            <img src="./assets/imgs/offers/boxSDA.jpg" alt="box sda" class="card-img-top" />
-            <div class="card-body">
-              <h5 class="card-title">
-                Box Senhor dos Anéis
-              </h5>
-              <b class="d-flex">
-                R$120,00
-                <small class="form-text text-muted ml-2"><del>R$160,00</del></small>
-              </b>
-              <a href="#" class="btn btn-outline-primary btn-block mt-1">Detalhes</a>
-            </div>
-          </div>
 
-          <div class="card bg-white shadow ml-md-1 mt-2 mx-auto" style="width: 18rem;">
-            <img src="./assets/imgs/offers/contosInacabados.jpg" alt="contos inacabados" class="card-img-top" />
-            <div class="card-body">
-              <h5 class="card-title">
-                Contos Inacabados
-              </h5>
-              <b class="d-flex">
-                R$70,00
-                <small class="form-text text-muted ml-2"><del>R$55,00</del></small>
-              </b>
-              <a href="#" class="btn btn-outline-primary btn-block mt-1">Detalhes</a>
-            </div>
-          </div>
+          <?php
+          $qtRegistros = "3";
 
-          <div class="card bg-white shadow ml-md-1 mt-2 mx-auto" style="width: 18rem;">
-            <img src="./assets/imgs/offers/boxSDA.jpg" alt="box sda" class="card-img-top" />
-            <div class="card-body">
-              <h5 class="card-title">
-                Box Senhor dos Anéis
-              </h5>
-              <b class="d-flex">
-                R$120,00
-                <small class="form-text text-muted ml-2"><del>R$160,00</del></small>
-              </b>
-              <a href="#" class="btn btn-outline-primary btn-block mt-1">Detalhes</a>
+          $pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : "1";
+
+          $inicio = ($pagina * $qtRegistros) - $qtRegistros;
+
+          $livrosPag = $livro->paginacao($inicio, $qtRegistros);
+
+          foreach ($livrosPag as $key => $value) :
+          ?>
+            <div class="card bg-white shadow ml-md-1 mt-2 mx-auto" style="width: 18rem;">
+              <img src="./assets/imgs/offers/boxSDA.jpg" alt="box sda" class="card-img-top" />
+              <div class="card-body">
+                <h5 class="card-title">
+                  <?php echo $value['nm_livro']; ?>
+                </h5>
+                <b class="d-flex">
+                  R$ <?php echo $value['vl_livro']; ?>
+                  <small class="form-text text-muted ml-2"><del>R$160,00</del></small>
+                </b>
+                <a href="#" class="btn btn-outline-primary btn-block mt-1">Detalhes</a>
+              </div>
             </div>
-          </div>
+
+          <?php endforeach ?>
         </div>
 
         <nav aria-label="offers navigation">
@@ -310,6 +300,9 @@ $autores = $autor->findAll();
               </div>
             </div>
           </div>
+        </div>
+        <div class="mt-3 text-center">
+          <a href="#" class="btn btn-primary p-2">Ver todo o estoque</a>
         </div>
       </div>
     </div>
