@@ -40,6 +40,12 @@ if (isset($_GET['livro'])) :
               echo "Falha ao fazer upload da imagem";
             }
           }
+
+          if (isset($_GET['delete'])) {
+            if ($livro->deleteFotoLivro($_GET['delete'])) {
+              unlink('../../../assets/imgs/livro/' . $_GET['nomeFoto']);
+            }
+          }
           ?>
 
           <form action="galeria.php?livro=<?php echo $_GET['livro']; ?>" method="post" enctype="multipart/form-data">
@@ -65,6 +71,9 @@ if (isset($_GET['livro'])) :
             <?php foreach ($livro->listarFotosLivro($_GET['livro']) as $key => $value) : ?>
               <div class="card mt-2" style="width: 18rem;">
                 <img src="../../../assets/imgs/livro/<?php echo $value['nm_foto'] ?>" class="card-img-top" alt="imagem livro">
+                <div class="card-body">
+                  <a href="galeria.php?livro=<?php echo $_GET['livro']; ?>&delete=<?php echo $value['cd_foto']; ?>&nomeFoto=<?php echo $value['nm_foto']; ?>" class="btn btn-danger btn-block">Excluir</a>
+                </div>
               </div>
             <?php endforeach ?>
 

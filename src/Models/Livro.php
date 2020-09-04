@@ -258,6 +258,15 @@ class Livro extends Crud
     return $stmt->execute();
   }
 
+  public function deleteFotoLivro($idFoto)
+  {
+    $sql = "DELETE FROM tb_foto WHERE cd_foto = :idFoto";
+    $stmt = Connection::getInstance()->prepare($sql);
+    $stmt->bindParam(':idFoto', $idFoto);
+
+    return $stmt->execute();
+  }
+
   public function paginacao($inicio, $qtRegistros)
   {
     $sql = "SELECT * FROM $this->table LIMIT " . $inicio . ", " . $qtRegistros;
