@@ -147,7 +147,8 @@ $livros = $livro->findAll();
           foreach ($livrosPag as $key => $value) :
           ?>
             <div class="card bg-white shadow ml-md-1 mt-2 mx-auto" style="width: 18rem;">
-              <img src="./assets/imgs/offers/boxSDA.jpg" alt="box sda" class="card-img-top" />
+              <?php $nomeFoto = $livro->listarFotosLivro($value['cd_livro']); ?>
+              <img src="./assets/imgs/livro/<?php echo $nomeFoto[0]['nm_foto'] ?>" alt="box sda" class="card-img-top" />
               <div class="card-body">
                 <h5 class="card-title">
                   <?php echo $value['nm_livro']; ?>
@@ -156,7 +157,7 @@ $livros = $livro->findAll();
                   R$ <?php echo $value['vl_livro']; ?>
                   <small class="form-text text-muted ml-2"><del>R$160,00</del></small>
                 </b>
-                <a href="#" class="btn btn-outline-primary btn-block mt-1">Detalhes</a>
+                <a href="#" class="btn btn-outline-primary btn-block">Detalhes</a>
               </div>
             </div>
 
