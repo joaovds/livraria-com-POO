@@ -2,6 +2,7 @@
 include_once './src/Models/Categoria.php';
 include_once './src/Models/Autor.php';
 include_once './src/Models/Livro.php';
+include_once './src/Models/Pesquisa.php';
 
 $categoria = new Categoria();
 $categorias = $categoria->findAll();
@@ -82,11 +83,20 @@ $livros = $livro->findAll();
             </div>
           </li>
         </ul>
-        <form class="form-inline my-0 my-lg-0">
+
+        <?php
+        $pesquisa = new Pesquisa();
+
+        if (isset($_GET['pesquisa'])) {
+          $resultados = $pesquisa->findAll($_GET['pesquisa']);
+        }
+        ?>
+
+        <form class="form-inline my-0 my-lg-0" method="GET">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Procurar produtos" aria-label="search Products" aria-describedby="textAcervo" />
+            <input name="pesquisa" type="text" class="form-control" placeholder="Procurar produtos" />
             <div class="input-group-prepend">
-              <button class="btn btn-outline-primary rounded-right" type="button" id="textAcervo">
+              <button class="btn btn-outline-primary rounded-right" type="submit">
                 <i class="fa fa-search"></i>
               </button>
             </div>
@@ -128,58 +138,120 @@ $livros = $livro->findAll();
         <small class="form-text text-success text-center">R$10 - R$100</small>
       </div>
 
-      <div class="col-12 col-md-9 col-sm-12">
-        <h2 class="border-bottom text-center text-md-left">
-          <b>Ofertas</b>
-        </h2>
+      <?php if (isset($_GET['pesquisa'])) : ?>
 
-        <div class="ofertas d-sm-block d-md-flex ml-0">
+        <div class="col-12 col-md-9 col-sm-12">
+          <h2 class="border-bottom text-center text-md-left">
+            <b>Resultados da busca</b>
+          </h2>
 
-          <?php
-          $qtRegistros = "3";
-          $todosLivros = $livro->findAll();
+          <div class="ofertas d-sm-block d-md-flex ml-0">
 
-          $pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : "1";
+            <?php
+            $qtRegistros = "3";
 
-          $inicio = ($pagina * $qtRegistros) - $qtRegistros;
+            $pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : "1";
 
-          $livrosPag = $livro->paginacao($inicio, $qtRegistros);
+            $inicio = ($pagina * $qtRegistros) - $qtRegistros;
+            echo $inicio;
 
-          foreach ($livrosPag as $key => $value) :
-          ?>
-            <div class="card bg-white shadow ml-md-1 mt-2 mx-auto" style="width: 18rem;">
-              <?php $nomeFoto = $livro->listarFotosLivro($value['cd_livro']); ?>
-              <img src="./assets/imgs/livro/<?php echo $nomeFoto[0]['nm_foto'] ?>" alt="box sda" class="card-img-top" />
-              <div class="card-body">
-                <h5 class="card-title">
-                  <?php echo $value['nm_livro']; ?>
-                </h5>
-                <b class="d-flex">
-                  R$ <?php echo $value['vl_livro']; ?>
-                  <small class="form-text text-muted ml-2"><del>R$160,00</del></small>
-                </b>
-                <a href="#" class="btn btn-outline-primary btn-block">Detalhes</a>
-              </div>
-            </div>
+            $livrosPag = $livro->paginacao($inicio, $qtRegistros);
 
-          <?php endforeach ?>
+            if (sizeof($resultados) <= 0) :
+              echo '<h2 class="mt-5 text-center">Nenhum resultado encontrado! :(';
+            else :
+              foreach ($resultados as $key => $value) :
+            ?>
+                <div class="card bg-white shadow ml-md-1 mt-2 mx-auto" style="width: 18rem;">
+                  <?php $nomeFoto = $livro->listarFotosLivro($value['cd_livro']); ?>
+                  <img src="./assets/imgs/livro/<?php echo $nomeFoto[0]['nm_foto'] ?>" alt="box sda" class="card-img-top" />
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <?php echo $value['nm_livro']; ?>
+                    </h5>
+                    <b class="d-flex">
+                      R$ <?php echo $value['vl_livro']; ?>
+                    </b>
+                    <a href="#" class="btn btn-outline-primary btn-block">Detalhes</a>
+                  </div>
+                </div>
+
+              <?php endforeach; ?>
+          </div>
+
+          <nav aria-label="offers navigation">
+            <ul class="pagination justify-content-center mt-2">
+              <?php
+              $numeroDePaginas = sizeof($resultados) / 3;
+
+              for ($i = 1; $i <= ceil($numeroDePaginas); $i++) :
+              ?>
+                <li class="page-item <?php if ($_GET['pagina'] == $i) : echo  "active";
+                                      endif ?>">
+                  <a class="page-link" href="?pesquisa=<?php echo $_GET['pesquisa']; ?>&pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                </li>
+            <?php endfor;
+            endif; ?>
+            </ul>
+          </nav>
         </div>
 
-        <nav aria-label="offers navigation">
-          <ul class="pagination justify-content-center mt-2">
-            <?php
-            $numeroDePaginas = sizeof($todosLivros) / 3;
+      <?php else : ?>
 
-            for ($i = 1; $i <= ceil($numeroDePaginas); $i++) :
+        <div class="col-12 col-md-9 col-sm-12">
+          <h2 class="border-bottom text-center text-md-left">
+            <b>Ofertas</b>
+          </h2>
+
+          <div class="ofertas d-sm-block d-md-flex ml-0">
+
+            <?php
+            $qtRegistros = "3";
+            $todosLivros = $livro->findAll();
+
+            $pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : "1";
+
+            $inicio = ($pagina * $qtRegistros) - $qtRegistros;
+
+            $livrosPag = $livro->paginacao($inicio, $qtRegistros);
+
+            foreach ($livrosPag as $key => $value) :
             ?>
-              <li class="page-item <?php if ($_GET['pagina'] == $i) : echo  "active";
-                                    endif ?>">
-                <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
-              </li>
-            <?php endfor; ?>
-          </ul>
-        </nav>
-      </div>
+              <div class="card bg-white shadow ml-md-1 mt-2 mx-auto" style="width: 18rem;">
+                <?php $nomeFoto = $livro->listarFotosLivro($value['cd_livro']); ?>
+                <img src="./assets/imgs/livro/<?php echo $nomeFoto[0]['nm_foto'] ?>" alt="box sda" class="card-img-top" />
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <?php echo $value['nm_livro']; ?>
+                  </h5>
+                  <b class="d-flex">
+                    R$ <?php echo $value['vl_livro']; ?>
+                    <small class="form-text text-muted ml-2"><del>R$160,00</del></small>
+                  </b>
+                  <a href="#" class="btn btn-outline-primary btn-block">Detalhes</a>
+                </div>
+              </div>
+
+            <?php endforeach ?>
+          </div>
+
+          <nav aria-label="offers navigation">
+            <ul class="pagination justify-content-center mt-2">
+              <?php
+              $numeroDePaginas = sizeof($todosLivros) / 3;
+
+              for ($i = 1; $i <= ceil($numeroDePaginas); $i++) :
+              ?>
+                <li class="page-item <?php if ($_GET['pagina'] == $i) : echo  "active";
+                                      endif ?>">
+                  <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+        </div>
+
+      <?php endif ?>
     </div>
   </div>
 

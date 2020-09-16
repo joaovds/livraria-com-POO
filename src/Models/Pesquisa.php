@@ -13,7 +13,7 @@ class Pesquisa extends Connection
 
   public function findAll($itemASerPesquisado)
   {
-    $sql = 'SELECT DISTINCT(l.cd_livro), l.nm_livro, l.ano_lancamento
+    $sql = 'SELECT DISTINCT(l.cd_livro), l.nm_livro, l.vl_livro,l.ano_lancamento
       FROM tb_livro l, tb_editora e, tb_autor a
       WHERE nm_livro like CONCAT("%", :item, "%")
       OR 
