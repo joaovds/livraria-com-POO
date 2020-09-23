@@ -153,7 +153,6 @@ $livros = $livro->findAll();
             $pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : "1";
 
             $inicio = ($pagina * $qtRegistros) - $qtRegistros;
-            echo $inicio;
 
             $livrosPag = $livro->paginacao($inicio, $qtRegistros);
 
@@ -172,7 +171,7 @@ $livros = $livro->findAll();
                     <b class="d-flex">
                       R$ <?php echo $value['vl_livro']; ?>
                     </b>
-                    <a href="#" class="btn btn-outline-primary btn-block">Detalhes</a>
+                    <a href="src/produto.php?<?php echo $value['id_livro']; ?>" class="btn btn-outline-primary btn-block">Detalhes</a>
                   </div>
                 </div>
 
@@ -188,7 +187,7 @@ $livros = $livro->findAll();
               ?>
                 <li class="page-item <?php if ($_GET['pagina'] == $i) : echo  "active";
                                       endif ?>">
-                  <a class="page-link" href="?pesquisa=<?php echo $_GET['pesquisa']; ?>&pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                  <a class="page-link" href="index.php?pesquisa=<?php echo $_GET['pesquisa']; ?>&pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
                 </li>
             <?php endfor;
             endif; ?>
@@ -228,7 +227,7 @@ $livros = $livro->findAll();
                     R$ <?php echo $value['vl_livro']; ?>
                     <small class="form-text text-muted ml-2"><del>R$160,00</del></small>
                   </b>
-                  <a href="#" class="btn btn-outline-primary btn-block">Detalhes</a>
+                  <a href="src/pages/produto.php?produto=<?php echo $value['cd_livro']; ?>" class="btn btn-outline-primary btn-block">Detalhes</a>
                 </div>
               </div>
 
