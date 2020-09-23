@@ -171,7 +171,7 @@ $livros = $livro->findAll();
                     <b class="d-flex">
                       R$ <?php echo $value['vl_livro']; ?>
                     </b>
-                    <a href="src/produto.php?<?php echo $value['id_livro']; ?>" class="btn btn-outline-primary btn-block">Detalhes</a>
+                    <a href="src/pages/produto.php?produto=<?php echo $value['cd_livro']; ?>" class="btn btn-outline-primary btn-block">Detalhes</a>
                   </div>
                 </div>
 
