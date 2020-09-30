@@ -385,6 +385,26 @@ if (isset($_GET['produto'])) :
         qtdProdutoValue.innerHTML = parseInt(qtdProdutoValue.textContent) - 1;
         qtdProdutoValue.setAttribute("value", qtdProdutoValue.textContent);
       });
+
+      function addCarrinho() {
+        const nomeProduto = document.getElementById('nomeProduto').innerText;
+        const qtdProduto = qtdProdutoValue.getAttribute("value");
+
+        let produtosCarrinho = JSON.parse(localStorage.getItem("produtosCarrinho") || '[]');
+
+        produtosCarrinho.push({
+          nome: nomeProduto,
+          qtd: qtdProduto
+        });
+        localStorage.setItem("produtosCarrinho", JSON.stringify(produtosCarrinho));
+
+        // alert(produtosCarrinho[0].nome);
+
+        // var carrinho = produtosCarrinho.map((item, indice) => {
+        //   console.log(item.nome, "-", item.qtd)
+        //   return item.nome
+        // });
+      }
     </script>
   </body>
 
