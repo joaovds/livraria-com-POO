@@ -129,7 +129,7 @@ if (isset($_GET['produto'])) :
         </div>
         <div class="col-12 mt-2 col-md-12 mt-lg-0 col-lg-6">
           <h2 class="font-weight-bold" id="nomeProduto">
-            <?php echo $produto['nm_livro'] ?>
+            <?php echo $produto['nm_livro']; ?>
           </h2>
 
           <div class="stars">
@@ -160,8 +160,8 @@ if (isset($_GET['produto'])) :
             </div>
 
             <div class="addCarrinho ml-4">
-              <button type="button" class="btn btn-outline-primary" onclick="addCarrinho()">
-                <b>Adicionar ao carrinho</b>
+              <button type="button" class="btn btn-outline-primary" id="addCarrinho" onclick="addCarrinho()">
+                <b id="textButtonCarrinho">Adicionar ao carrinho</b>
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
               </button>
             </div>
@@ -377,6 +377,8 @@ if (isset($_GET['produto'])) :
       const maisProduto = document.getElementById('maisProduto');
       const menosProduto = document.getElementById('menosProduto');
 
+      let produtosCarrinho = JSON.parse(localStorage.getItem("produtosCarrinho") || '[]');
+
       maisProduto.addEventListener('click', () => {
         qtdProdutoValue.innerHTML = parseInt(qtdProdutoValue.textContent) + 1;
         qtdProdutoValue.setAttribute("value", qtdProdutoValue.textContent);
@@ -390,21 +392,25 @@ if (isset($_GET['produto'])) :
         const nomeProduto = document.getElementById('nomeProduto').innerText;
         const qtdProduto = qtdProdutoValue.getAttribute("value");
 
-        let produtosCarrinho = JSON.parse(localStorage.getItem("produtosCarrinho") || '[]');
-
         produtosCarrinho.push({
+          id: <?php echo $produto['cd_livro']; ?>,
           nome: nomeProduto,
           qtd: qtdProduto
         });
         localStorage.setItem("produtosCarrinho", JSON.stringify(produtosCarrinho));
 
         // alert(produtosCarrinho[0].nome);
-
-        // var carrinho = produtosCarrinho.map((item, indice) => {
-        //   console.log(item.nome, "-", item.qtd)
-        //   return item.nome
-        // });
       }
+      const addCarrinhoButton = document.getElementById("addCarrinho");
+      const textButton = document.getElementById("textButtonCarrinho");
+
+      const verificaProdutoCarrinho = produtosCarrinho.map((item) => {
+        if (<?php echo $produto['cd_livro']; ?> == item.id) {
+          addCarrinhoButton.setAttribute("class", "btn btn-primary btn-block");
+          textButton.innerHTML = "Já adicionado";
+          return true;
+        }
+      });
     </script>
   </body>
 
