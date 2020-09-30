@@ -128,11 +128,11 @@ $livro = new Livro();
                       <td>R$${valor}</td>
                       <td>
                         <div class="btn-group" role="group">
-                          <button type="button" class="btn btn-light">
+                          <button type="button" class="btn btn-light" id="menosProduto">
                             <i class="fa fa-arrow-down" aria-hidden="true"></i>
                           </button>
-                          <b class="btn">${item.qtd}</b>
-                          <button type="button" class="btn btn-light">
+                          <b class="btn" id="qtdProduto" value="${item.qtd}">${item.qtd}</b>
+                          <button type="button" class="btn btn-light" id="maisProduto">
                             <i class="fa fa-arrow-up" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -288,7 +288,18 @@ $livro = new Livro();
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
   <script>
+    let qtdProdutoValue = document.getElementById('qtdProduto');
+    const maisProduto = document.getElementById('maisProduto');
+    const menosProduto = document.getElementById('menosProduto');
 
+    maisProduto.addEventListener('click', () => {
+      qtdProdutoValue.innerHTML = parseInt(qtdProdutoValue.textContent) + 1;
+      qtdProdutoValue.setAttribute("value", qtdProdutoValue.textContent);
+    });
+    menosProduto.addEventListener('click', () => {
+      qtdProdutoValue.innerHTML = parseInt(qtdProdutoValue.textContent) - 1;
+      qtdProdutoValue.setAttribute("value", qtdProdutoValue.textContent);
+    });
   </script>
 </body>
 
