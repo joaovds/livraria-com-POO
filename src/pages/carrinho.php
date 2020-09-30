@@ -118,12 +118,18 @@ $livro = new Livro();
                 <?php foreach ($livro->findAll() as $key => $value) : ?>
                   if (item.id === <?php echo $value["cd_livro"] ?>) {
                     const valor = <?php echo $value["vl_livro"] ?>;
+                    const cd = <?php echo $value["cd_livro"] ?>;
 
                     tbody.innerHTML += `
                     <tr>
                       <td scope="row">
                         ${item.nome}
-                        <button type="button" class="btn btn-sm btn-outline-info ml-5">Detalhe</button>
+                        <a
+                          href="produto.php?produto=<?php echo $value['cd_livro']; ?>"
+                          class="btn btn-sm btn-outline-info ml-5"
+                        >
+                          Detalhe
+                        </a>
                         </th>
                       <td>R$${valor}</td>
                       <td>
@@ -139,7 +145,7 @@ $livro = new Livro();
                       </td>
                       <td>R$120,00</td>
                       <td>
-                        <i class="fa fa-close"></i>
+                        <i class="fa fa-close" onclick="removerCarrinho(${cd})"></i>
                       </td>
                     </tr>
                     `;
@@ -300,6 +306,15 @@ $livro = new Livro();
       qtdProdutoValue.innerHTML = parseInt(qtdProdutoValue.textContent) - 1;
       qtdProdutoValue.setAttribute("value", qtdProdutoValue.textContent);
     });
+
+    function removerCarrinho(cd_produto) {
+      for (let index = 0; index < produtosCarrinho.length; index++) {
+        if (produtosCarrinho[index].id == cd_produto) {
+          produtosCarrinho.splice(index, 1)
+          localStorage.setItem("produtosCarrinho", JSON.stringify(produtosCarrinho));
+        }
+      }
+    }
   </script>
 </body>
 
