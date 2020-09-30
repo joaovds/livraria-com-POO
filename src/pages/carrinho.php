@@ -1,3 +1,8 @@
+<?php
+include_once '../Models/Livro.php';
+$livro = new Livro();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -103,73 +108,45 @@
               <th scope="col"></th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td scope="row">
-                Box Senhor dos Anéis
-                <button type="button" class="btn btn-sm btn-outline-info ml-5">Detalhe</button>
-                </th>
-              <td>R$120,00</td>
-              <td>
-                <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-light">
-                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                  </button>
-                  <b class="btn">1</b>
-                  <button type="button" class="btn btn-light">
-                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </td>
-              <td>R$120,00</td>
-              <td>
-                <i class="fa fa-close"></i>
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                Contos Inacabados
-                <button type="button" class="btn btn-sm btn-outline-info ml-5">Detalhe</button>
-                </th>
-              <td>R$60,00</td>
-              <td>
-                <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-light">
-                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                  </button>
-                  <b class="btn">2</b>
-                  <button type="button" class="btn btn-light">
-                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </td>
-              <td>R$120,00</td>
-              <td>
-                <i class="fa fa-close"></i>
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                A Queda de Gondolin
-                <button type="button" class="btn btn-sm btn-outline-info ml-5">Detalhe</button>
-                </th>
-              <td>R$34,00</td>
-              <td>
-                <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-light">
-                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                  </button>
-                  <b class="btn">1</b>
-                  <button type="button" class="btn btn-light">
-                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </td>
-              <td>R$34,00</td>
-              <td>
-                <i class="fa fa-close"></i>
-              </td>
-            </tr>
+          <tbody id="tbody">
+
+            <script>
+              let produtosCarrinho = JSON.parse(localStorage.getItem("produtosCarrinho") || '[]');
+              const tbody = document.getElementById("tbody");
+
+              produtosCarrinho.forEach((item) => {
+                <?php foreach ($livro->findAll() as $key => $value) : ?>
+                  if (item.id === <?php echo $value["cd_livro"] ?>) {
+                    const valor = <?php echo $value["vl_livro"] ?>;
+
+                    tbody.innerHTML += `
+                    <tr>
+                      <td scope="row">
+                        ${item.nome}
+                        <button type="button" class="btn btn-sm btn-outline-info ml-5">Detalhe</button>
+                        </th>
+                      <td>R$${valor}</td>
+                      <td>
+                        <div class="btn-group" role="group">
+                          <button type="button" class="btn btn-light">
+                            <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                          </button>
+                          <b class="btn">${item.qtd}</b>
+                          <button type="button" class="btn btn-light">
+                            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </td>
+                      <td>R$120,00</td>
+                      <td>
+                        <i class="fa fa-close"></i>
+                      </td>
+                    </tr>
+                    `;
+                  }
+                <?php endforeach ?>
+              });
+            </script>
           </tbody>
         </table>
       </div>
@@ -239,7 +216,7 @@
     <footer class="row bg-light">
       <div class="col-12 col-sm-6 col-md-3 offset-md-1">
         <div class="logo mt-2">
-          <img src="../assets/logo.png" alt="logo" width="150px" />
+          <img src="../../assets/logo.png" alt="logo" width="150px" />
         </div>
 
         <div class="infos">
@@ -309,6 +286,10 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+  <script>
+
+  </script>
 </body>
 
 </html>
