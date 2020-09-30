@@ -128,7 +128,7 @@ if (isset($_GET['produto'])) :
           <img src="../../assets/imgs/livro/<?php echo $nomeFoto[0]['nm_foto'] ?>" alt="<?php echo $produto['nm_livro'] ?>" class="img-fluid" width="100%" />
         </div>
         <div class="col-12 mt-2 col-md-12 mt-lg-0 col-lg-6">
-          <h2 class="font-weight-bold">
+          <h2 class="font-weight-bold" id="nomeProduto">
             <?php echo $produto['nm_livro'] ?>
           </h2>
 
@@ -150,17 +150,17 @@ if (isset($_GET['produto'])) :
 
           <div class="buy d-sm-flex mb-sm-4 align-items-md-center align-content-md-around mt-5">
             <div class="btn-group shadow-lg" role="group">
-              <button type="button" class="btn btn-light">
+              <button type="button" class="btn btn-light" id="menosProduto">
                 <i class="fa fa-arrow-down" aria-hidden="true"></i>
               </button>
-              <b class="btn">2</b>
-              <button type="button" class="btn btn-light">
+              <b class="btn" id="qtdProduto" value="1">1</b>
+              <button type="button" class="btn btn-light" id="maisProduto">
                 <i class="fa fa-arrow-up" aria-hidden="true"></i>
               </button>
             </div>
 
             <div class="addCarrinho ml-4">
-              <button type="button" class="btn btn-outline-primary">
+              <button type="button" class="btn btn-outline-primary" onclick="addCarrinho()">
                 <b>Adicionar ao carrinho</b>
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
               </button>
@@ -371,6 +371,21 @@ if (isset($_GET['produto'])) :
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <script>
+      let qtdProdutoValue = document.getElementById('qtdProduto');
+      const maisProduto = document.getElementById('maisProduto');
+      const menosProduto = document.getElementById('menosProduto');
+
+      maisProduto.addEventListener('click', () => {
+        qtdProdutoValue.innerHTML = parseInt(qtdProdutoValue.textContent) + 1;
+        qtdProdutoValue.setAttribute("value", qtdProdutoValue.textContent);
+      });
+      menosProduto.addEventListener('click', () => {
+        qtdProdutoValue.innerHTML = parseInt(qtdProdutoValue.textContent) - 1;
+        qtdProdutoValue.setAttribute("value", qtdProdutoValue.textContent);
+      });
+    </script>
   </body>
 
   </html>
